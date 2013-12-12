@@ -44,14 +44,14 @@
     self.backgroundColor = [UIColor clearColor];
     
     _lineWidth = fmaxf(self.frame.size.width * 0.025, 1.f);
-    _tintColor = [UIColor ios7Blue];
-    _tickColor = [UIColor whiteColor];
+    _tintColor = [UIColor whiteColor];
+    _tickColor = [UIColor colorWithRed:0.168627 green:0.168627 blue:0.168627 alpha:1.0];
     
     self.progressBackgroundLayer = [CAShapeLayer layer];
     _progressBackgroundLayer.strokeColor = _tintColor.CGColor;
     _progressBackgroundLayer.fillColor = self.backgroundColor.CGColor;
     _progressBackgroundLayer.lineCap = kCALineCapRound;
-    _progressBackgroundLayer.lineWidth = _lineWidth;
+    _progressBackgroundLayer.lineWidth = 0;
     [self.layer addSublayer:_progressBackgroundLayer];
     
     self.progressLayer = [CAShapeLayer layer];
@@ -112,9 +112,9 @@
     if ([self progress] == 1.0) {
         [self drawTick];
     } else if (([self progress] > 0) && [self progress] < 1.0) {
-        [self drawStop];
+        //[self drawStop];
     } else {
-        [self drawArrow];
+        //[self drawArrow];
     }
 }
 
@@ -133,6 +133,8 @@
 #pragma mark Drawing
 
 - (void) drawBackgroundCircle:(BOOL) partial {
+    
+    
     CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
     CGFloat endAngle = (2 * (float)M_PI) + startAngle;
     CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
@@ -142,11 +144,12 @@
     UIBezierPath *processBackgroundPath = [UIBezierPath bezierPath];
     processBackgroundPath.lineWidth = _lineWidth;
     processBackgroundPath.lineCapStyle = kCGLineCapRound;
+    processBackgroundPath.lineWidth = 0;
     
     // Recompute the end angle to make it at 90% of the progress
-    if (partial) {
+    //if (partial) {
         endAngle = (1.8F * (float)M_PI) + startAngle;
-    }
+    //}
 
     [processBackgroundPath addArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:YES];
 
